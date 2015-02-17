@@ -160,7 +160,8 @@
   <Target Name="CreateAddOnPackage">
     <Exec Command="..\.nuget\nuget pack EPiCode.Commerce.RestApi.csproj -OutputDirectory $(OutputPath)" />
   </Target>
-  <Target Name="AfterBuild" DependsOnTargets="CreateAddOnPackage">
+  <Target Name="AfterBuild" DependsOnTargets="CreateAddOnPackage"
+          Condition="$(Configuration) == 'Debug'">
   </Target>
   <Import Project="..\packages\OctoPack.3.0.41\tools\OctoPack.targets" Condition="Exists('..\packages\OctoPack.3.0.41\tools\OctoPack.targets')" />
   <Target Name="EnsureOctoPackImported" BeforeTargets="BeforeBuild" Condition="'$(OctoPackImported)' == ''">
