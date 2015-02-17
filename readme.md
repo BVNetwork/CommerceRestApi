@@ -14,7 +14,7 @@ The API mostly does not adhere to REST principles, please see code for usage of 
 ## Installation ##
 Run the following command in the Nuget Package Manager Console for your web site (not Commerce Manager site):
 ```
-install-package EPiCode.CommerceRestApi
+install-package EPiCode.Commerce.RestApi
 ```
 You need to add the EPiServer Nuget Feed to Visual Studio (see http://nuget.episerver.com/en/Feed/)
 
