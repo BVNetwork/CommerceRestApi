@@ -16,7 +16,7 @@
         </dependencies>
     </metadata>
     <files>
-        <file src="bin\$configuration$\$id$.dll"
+        <file src="bin\$configuration$\EPiCode.Commerce.RestApi.dll"
               target="lib\net45\" />
     </files>
 
