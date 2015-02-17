@@ -23,11 +23,11 @@ The easiest way to use the REST API is to install the Postman App for Chrome and
 ### Install the Postman App ###
 Goto https://chrome.google.com/webstore/detail/postman-rest-client/fdmmgilgnpjigdojojpjoooidkmcomcm
 
-![](postman-install-app.png)
+![](https://raw.githubusercontent.com/BVNetwork/CommerceRestApi/master/doc/images/postman-install-app.png)
 
 ### Import the API collection ###
 Click the "Import Collection" button: 
-![](https://raw.githubusercontent.com/BVNetwork/CommerceRestApi/master/doc/images/postman-install-app.png)
+![](https://raw.githubusercontent.com/BVNetwork/CommerceRestApi/master/doc/images/postman-import-collection.png)
 
 Import from the following url:
 `https://raw.githubusercontent.com/BVNetwork/CommerceRestApi/master/doc/Commerce-Rest-API-Postman-Collection.txt`
