@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>EPiCode.Commerce.RestService</RootNamespace>
-    <AssemblyName>EPiCode.Commerce.RestService</AssemblyName>
+    <AssemblyName>EPiCode.Commerce.RestApi</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -158,10 +158,10 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="CreateAddOnPackage">
-    <Exec Command="..\.nuget\nuget pack EPiCode.Commerce.RestApi.csproj -OutputDirectory $(OutputPath)" />
+    <Exec Command="..\.nuget\nuget pack EPiCode.Commerce.RestApi.csproj -OutputDirectory $(OutputPath) -Prop Configuration=$(Configuration)" />
   </Target>
-  <Target Name="AfterBuild" DependsOnTargets="CreateAddOnPackage"
-          Condition="$(Configuration) == 'Debug'">
+  <Target Name="AfterBuild" DependsOnTargets="CreateAddOnPackage" >
+      <!--Condition="$(Configuration) == 'Debug'"-->
   </Target>
   <Import Project="..\packages\OctoPack.3.0.41\tools\OctoPack.targets" Condition="Exists('..\packages\OctoPack.3.0.41\tools\OctoPack.targets')" />
   <Target Name="EnsureOctoPackImported" BeforeTargets="BeforeBuild" Condition="'$(OctoPackImported)' == ''">

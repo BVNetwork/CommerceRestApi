@@ -2,7 +2,8 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <metadata>
         <id>EPiCode.Commerce.RestApi</id>
-        <version>$version$</version>
+        <!-- Only for locally created packages -->
+        <version>0.1.0</version>
         <title>Rest API for Commerce</title>
         <authors>The EPiCode Community</authors>
         <projectUrl>https://github.com/BVNetwork/CommerceRestApi</projectUrl>
@@ -14,4 +15,9 @@
             <dependency id="Microsoft.AspNet.WebApi" version="5.1.2" />
         </dependencies>
     </metadata>
+    <files>
+        <file src="bin\$configuration$\$id$.dll"
+              target="lib\net45\" />
+    </files>
+
 </package>
