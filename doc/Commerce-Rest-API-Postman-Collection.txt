@@ -20,8 +20,8 @@
         {
             "collectionId": "4026ed6f-a6e1-c3db-f673-e70c0b0aca26",
             "id": "0dd193e6-462a-3d2c-3fb3-b532aca32d99",
-            "name": "Get Customer Orders",
-            "description": "",
+            "name": "Order: Get All Orders for Customer",
+            "description": "Gets all orders for a give customer.",
             "url": "{{host}}/api/order/GetOrdersForCustomer?id=b221df97-2771-4ac1-a042-dd3ab81c0680",
             "method": "GET",
             "headers": "apikey: {{apikey}}\n",
@@ -48,7 +48,7 @@
         {
             "collectionId": "4026ed6f-a6e1-c3db-f673-e70c0b0aca26",
             "id": "0f5f315e-cae7-004a-da9d-60910ae5beb2",
-            "name": "Get All Customers",
+            "name": "Customers: Get All Customers",
             "description": "",
             "url": "{{host}}/api/customer/get",
             "method": "GET",
@@ -62,7 +62,7 @@
         {
             "collectionId": "4026ed6f-a6e1-c3db-f673-e70c0b0aca26",
             "id": "1b58f781-9680-cb82-5438-a9f6b7b1e074",
-            "name": "Inventory - Add or Update",
+            "name": "Inventory: Add or Update",
             "description": "Add or update inventory for a given SKU",
             "url": "{{host}}/api/inventory/post",
             "method": "POST",
@@ -76,9 +76,37 @@
         {
             "collectionId": "4026ed6f-a6e1-c3db-f673-e70c0b0aca26",
             "id": "1cfc14a8-73bd-4b5f-0844-12c89816bf92",
-            "name": "Get Contact By Primary Key",
+            "name": "Contact: Get Contact By Primary Key",
             "description": "Loads contact data based on the Primary Key (guid) of the contact.",
             "url": "{{host}}/api/Contact/get/ed0898d9-eda9-4a0b-a136-0b9ba4f352cd",
+            "method": "GET",
+            "headers": "apikey: {{apikey}}\n",
+            "data": [],
+            "dataMode": "params",
+            "timestamp": 0,
+            "responses": [],
+            "version": 2
+        },
+        {
+            "collectionId": "4026ed6f-a6e1-c3db-f673-e70c0b0aca26",
+            "id": "1d3e4c94-183b-a0b5-1e56-856596bad7ab",
+            "name": "ChangeNotification: Start",
+            "description": "",
+            "url": "{{host}}/api/ChangeNotification/Start",
+            "method": "GET",
+            "headers": "apikey: {{apikey}}\n",
+            "data": [],
+            "dataMode": "params",
+            "timestamp": 0,
+            "responses": [],
+            "version": 2
+        },
+        {
+            "collectionId": "4026ed6f-a6e1-c3db-f673-e70c0b0aca26",
+            "id": "2a2ee771-1493-d13b-aa17-0e0d1d5a1905",
+            "name": "ChangeNotification: Get Processors",
+            "description": "",
+            "url": "{{host}}/api/ChangeNotification/GetChangeProcessors",
             "method": "GET",
             "headers": "apikey: {{apikey}}\n",
             "data": [],
@@ -114,6 +142,20 @@
             "timestamp": 0,
             "version": 2,
             "time": 1413541451761
+        },
+        {
+            "collectionId": "4026ed6f-a6e1-c3db-f673-e70c0b0aca26",
+            "id": "45c38833-d3c6-4dff-81ab-a48ac27131b1",
+            "name": "ChangeNotification: Stop",
+            "description": "",
+            "url": "{{host}}/api/ChangeNotification/Stop",
+            "method": "GET",
+            "headers": "apikey: {{apikey}}\n",
+            "data": [],
+            "dataMode": "params",
+            "timestamp": 0,
+            "responses": [],
+            "version": 2
         },
         {
             "collectionId": "4026ed6f-a6e1-c3db-f673-e70c0b0aca26",
@@ -160,7 +202,7 @@
         {
             "collectionId": "4026ed6f-a6e1-c3db-f673-e70c0b0aca26",
             "id": "769ed3ea-52bc-b852-ac23-21a741462ee8",
-            "name": "Get Active Orders",
+            "name": "Order: Get Active Orders",
             "description": "Gets orders with status InProgress and PartiallyShipped",
             "url": "{{host}}/api/order/GetActiveOrders",
             "method": "GET",
@@ -188,8 +230,8 @@
         {
             "collectionId": "4026ed6f-a6e1-c3db-f673-e70c0b0aca26",
             "id": "872f7e88-007a-2daf-7f38-2fbb047cdcea",
-            "name": "SyncContentModels",
-            "description": "",
+            "name": "System: SyncContentModels",
+            "description": "Experimental code to force EPiServer to syncronize content models from code and database.",
             "url": "{{host}}/api/system/SyncContentModels?forceCommit=true",
             "method": "GET",
             "headers": "Content-Type: application/json\napikey: simonsays\n",
@@ -216,7 +258,7 @@
         {
             "collectionId": "4026ed6f-a6e1-c3db-f673-e70c0b0aca26",
             "id": "9167ecc9-9fb3-69d8-2f5f-698215774082",
-            "name": "Get Contact By Email",
+            "name": "Contact: Get Contact By Email",
             "description": "Loads contact data based on the email address",
             "url": "{{host}}/api/Contact/get/?email=receiving@unknowdomain.domain",
             "method": "GET",
@@ -229,8 +271,22 @@
         },
         {
             "collectionId": "4026ed6f-a6e1-c3db-f673-e70c0b0aca26",
+            "id": "92c7dc8f-641b-a8ba-a063-698e8d86e734",
+            "name": "ChangeNotification: Start Recovery",
+            "description": "",
+            "url": "{{host}}/api/ChangeNotification/StartRecovery",
+            "method": "GET",
+            "headers": "apikey: {{apikey}}\n",
+            "data": [],
+            "dataMode": "params",
+            "timestamp": 0,
+            "responses": [],
+            "version": 2
+        },
+        {
+            "collectionId": "4026ed6f-a6e1-c3db-f673-e70c0b0aca26",
             "id": "94c0b79c-ff95-5da6-cd29-35a54fb9930e",
-            "name": "Inventory - Get for Variation",
+            "name": "Inventory: Get for Variation",
             "description": "Gets the inventory for a given SKU",
             "url": "{{host}}/api/inventory/get/Nr-1---Stor_1/",
             "method": "GET",
@@ -244,7 +300,7 @@
         {
             "collectionId": "4026ed6f-a6e1-c3db-f673-e70c0b0aca26",
             "id": "9edadc17-f201-36be-b378-57bb4ce5be3b",
-            "name": "Get All Order IDs",
+            "name": "Order: Get All Order IDs",
             "description": "Gets the ID (int) of all orders",
             "url": "{{host}}/api/order/get",
             "method": "GET",
@@ -272,7 +328,7 @@
         {
             "collectionId": "4026ed6f-a6e1-c3db-f673-e70c0b0aca26",
             "id": "a1b1f054-9363-288c-a7b2-2c601062bd0f",
-            "name": "Clear Cache",
+            "name": "System: Clear Cache",
             "description": "Clears the Catalog and EPiServer System Cache",
             "url": "{{host}}/api/system/ClearCache",
             "method": "GET",
@@ -286,7 +342,7 @@
         {
             "collectionId": "4026ed6f-a6e1-c3db-f673-e70c0b0aca26",
             "id": "a2780615-4e42-f6b4-7c05-a5ae2b82b874",
-            "name": "Get Order By ID",
+            "name": "Order: Get By ID",
             "description": "Uses internal Order ID, not tracking number.",
             "url": "{{host}}/api/order/get?orderid=11",
             "method": "GET",
@@ -316,14 +372,14 @@
             "id": "c46c60ff-b063-658e-0dfc-4ccdf8930a1c",
             "name": "Meta Fields: Get All Unused Fields",
             "description": "Returns meta fields that are not used by a meta class. These fields (if not system fields) can be deleted.",
-            "url": "{{host}}/api/MetaField/UnusedFields",
+            "url": "{{host}}/api/MetaField/GetUnusedFields",
             "method": "GET",
             "headers": "apikey: {{apikey}}\n",
             "data": [],
             "dataMode": "params",
             "timestamp": 0,
             "version": 2,
-            "time": 1418411131766
+            "time": 1422917573758
         },
         {
             "collectionId": "4026ed6f-a6e1-c3db-f673-e70c0b0aca26",
@@ -359,6 +415,20 @@
             "name": "Meta Class: Get By ID",
             "description": "Returns the meta class definition based on the id",
             "url": "{{host}}/api/MetaClass/get/1",
+            "method": "GET",
+            "headers": "apikey: {{apikey}}\n",
+            "data": [],
+            "dataMode": "params",
+            "timestamp": 0,
+            "responses": [],
+            "version": 2
+        },
+        {
+            "collectionId": "4026ed6f-a6e1-c3db-f673-e70c0b0aca26",
+            "id": "d448a155-ef65-e540-dfff-d88a90bec65e",
+            "name": "Order: Get Order by Tracking Number",
+            "description": "The tracking number is usually what is shown as the Order Number, typically starts with 'PO' and a number. Ex: 'PO1234'",
+            "url": "{{host}}/api/order/get?trackingNumber=PO593",
             "method": "GET",
             "headers": "apikey: {{apikey}}\n",
             "data": [],
@@ -412,7 +482,7 @@
         {
             "collectionId": "4026ed6f-a6e1-c3db-f673-e70c0b0aca26",
             "id": "e16b41e7-4861-6621-edaf-b4c83a0dcc55",
-            "name": "Get Current Cart",
+            "name": "Cart: Get Current Cart",
             "description": "Gets the cart for the current user",
             "url": "{{host}}/api/cartinfo/get",
             "method": "GET",
@@ -426,7 +496,7 @@
         {
             "collectionId": "4026ed6f-a6e1-c3db-f673-e70c0b0aca26",
             "id": "e86dd618-125e-b48f-3f16-9315a2a500de",
-            "name": "Get Customer",
+            "name": "Customer: Get Customer by Primary Key",
             "description": "",
             "url": "{{host}}/api/customer/get?id=b221df97-2771-4ac1-a042-dd3ab81c0680",
             "method": "GET",
@@ -440,8 +510,8 @@
         {
             "collectionId": "4026ed6f-a6e1-c3db-f673-e70c0b0aca26",
             "id": "eb345d2b-0657-5a92-142f-03c5f2975ad5",
-            "name": "Clear Catalog",
-            "description": "",
+            "name": "System: Clear Catalog",
+            "description": "Removes all items in the catalog, and the catalog itself. Typically used for developing and testing catalog import jobs.\n\nThis is a highly destructive operation and will render your system in an unusable state. ",
             "url": "{{host}}/api/system/ClearCatalogAndModels",
             "method": "GET",
             "headers": "Content-Type: application/json\napikey: {{apikey}}\n",
@@ -450,6 +520,20 @@
             "timestamp": 0,
             "version": 2,
             "time": 1401738807268
+        },
+        {
+            "collectionId": "4026ed6f-a6e1-c3db-f673-e70c0b0aca26",
+            "id": "ecf4b6e9-2f5a-1a1a-270e-b5952b5806f9",
+            "name": "Order: Get Defined Statuses",
+            "description": "Gets the defined order statuses from the system.",
+            "url": "{{host}}/api/order/GetDefinedOrderStatuses",
+            "method": "GET",
+            "headers": "apikey: {{apikey}}\n",
+            "data": [],
+            "dataMode": "params",
+            "timestamp": 0,
+            "responses": [],
+            "version": 2
         },
         {
             "collectionId": "4026ed6f-a6e1-c3db-f673-e70c0b0aca26",
@@ -482,7 +566,7 @@
         {
             "collectionId": "4026ed6f-a6e1-c3db-f673-e70c0b0aca26",
             "id": "f3192e09-3431-6a67-f094-51beee12499c",
-            "name": "Get All Contacts",
+            "name": "Contact: Get All Contacts",
             "description": "A raw version, handing out Business Foundation objects instead of wrapped view models.",
             "url": "{{host}}/api/Contact/get",
             "method": "GET",
