@@ -3,7 +3,7 @@
     <metadata>
         <id>EPiCode.Commerce.RestApi</id>
         <!-- Only for locally created packages -->
-        <version>0.1.0</version>
+        <version>1.1.13</version>
         <title>Rest API for Commerce</title>
         <authors>The EPiCode Community</authors>
         <projectUrl>https://github.com/BVNetwork/CommerceRestApi</projectUrl>

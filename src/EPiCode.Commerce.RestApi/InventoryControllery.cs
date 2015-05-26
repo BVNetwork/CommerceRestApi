@@ -69,7 +69,7 @@ namespace EPiCode.Commerce.RestService
             {
                 throw new ArgumentNullException("InStockQuantity", "InStockQuantity is required");
             }
-            
+
             CatalogKey key = new CatalogKey(AppContext.Current.ApplicationId, code);
 
             var inventoryService = ServiceLocator.Current.GetInstance<IWarehouseInventoryService>();
@@ -88,6 +88,17 @@ namespace EPiCode.Commerce.RestService
                 inv.CatalogKey = key;
             }
             inv.InStockQuantity = inStockQuantity;
+
+            // Set tracking status, if passed in, if not, ignore it
+            string status = inventory["InventoryStatus"].Value<string>();
+            if (string.IsNullOrEmpty(status) == false)
+            {
+                InventoryTrackingStatus inventoryTrackingStatus;
+                if(Enum.TryParse(status, true, out inventoryTrackingStatus))
+                {
+                    inv.InventoryStatus = inventoryTrackingStatus;
+                }
+            }
 
             inventoryService.Save(inv);
 
