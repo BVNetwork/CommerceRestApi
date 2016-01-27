@@ -20,7 +20,7 @@ namespace EPiCode.Commerce.RestService.Contracts
 
         public void AdjustReturnTotal(OrderForm returnForm)
         {
-            returnForm.Total = returnForm.Total - 100;
+            //Add items or change shipment
         }
     }
 }
