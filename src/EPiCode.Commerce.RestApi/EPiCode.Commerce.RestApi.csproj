@@ -120,8 +120,13 @@
   <ItemGroup>
     <Compile Include="ApiInitializer.cs" />
     <Compile Include="ChangeNotificationController.cs" />
+    <Compile Include="Contracts\ICreditPaymentCreator.cs" />
+    <Compile Include="Contracts\IOrderFormPaymentRetriever.cs" />
+    <Compile Include="Contracts\IReturnFormTotalCalculator.cs" />
+    <Compile Include="Contracts\IReturnOrderValidator.cs" />
     <Compile Include="Converters\MoneyConverter.cs" />
     <Compile Include="Converters\CustomerPricingConverter.cs" />
+    <Compile Include="DataObjects\ReturnInfo.cs" />
     <Compile Include="InventoryControllery.cs" />
     <Compile Include="PriceController.cs" />
     <Compile Include="ContactController.cs" />

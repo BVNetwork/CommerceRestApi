@@ -39,6 +39,7 @@ namespace EPiCode.Commerce.RestService.Repositories
             return OrderContext.Current.GetPurchaseOrders(customerId).ToList();
         }
 
+
         private List<PurchaseOrder> GetOrders(string sqlWhereClause)
         {
             return GetOrders(sqlWhereClause, string.Empty);

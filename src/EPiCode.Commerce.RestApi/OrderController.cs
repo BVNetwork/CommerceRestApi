@@ -6,8 +6,10 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using EPiCode.Commerce.RestService.Contracts;
 using EPiCode.Commerce.RestService.DataObjects;
 using EPiCode.Commerce.RestService.Repositories;
+using EPiServer.ServiceLocation;
 using Mediachase.Commerce.Catalog;
 using Mediachase.Commerce.Catalog.Managers;
 using Mediachase.Commerce.Catalog.Objects;
@@ -66,6 +68,41 @@ namespace EPiCode.Commerce.RestService
             OrderRepository repo = new OrderRepository();
             PurchaseOrder purchaseOrder = repo.GetOrderByTrackingNumber(trackingNumber);
             return purchaseOrder;
+        }
+
+        [HttpPost]
+        public HttpResponseMessage CreateReturn(ReturnInfo returnInfo)
+        {
+            var returFormCalculator = ServiceLocator.Current.GetInstance<IReturnFormTotalCalculator>();
+            var paymentCreator = ServiceLocator.Current.GetInstance<ICreditPaymentCreator>();
+            var paymentRetriever = ServiceLocator.Current.GetInstance<IOrderFormPaymentRetriever>();
+            var returnOrderValidator = ServiceLocator.Current.GetInstance<IReturnOrderValidator>();
+
+            var order = Get(returnInfo.OrderNumber);
+
+            string[] messages;
+            if (!returnOrderValidator.TryValidateReturn(order, returnInfo, out messages))
+            {
+                return CreateResponseMessage(HttpStatusCode.NotAcceptable, string.Join(", ", messages));
+            }
+             
+            var returnForm = ReturnExchangeManager.AddNewReturnFormToPurchaseOrder(order);
+
+            foreach (var item in returnInfo.ReturnItems)
+            {
+                var returnableLineItems = ReturnExchangeManager.GetAvailableForReturnLineItems(order.OrderForms[0].Shipments[0]).Where(l => l.CatalogEntryId == item.Sku).ToList();
+                ReturnExchangeManager.AddNewReturnLineItemToReturnForm(returnForm, returnableLineItems.FirstOrDefault(), item.Quantity, item.ReturnReason);
+                ReturnExchangeManager.AddNewShipmetToReturnForm(returnForm, order.OrderForms[0].Shipments[0]);                
+            }
+
+            ReturnFormStatusManager.AcknowledgeReceiptItems(returnForm);
+
+            returFormCalculator.AdjustReturnTotal(returnForm);
+            paymentCreator.CreateCreditPayment<OtherPayment>(returnForm, order,
+                paymentRetriever.GetCapturedPayment(order).PaymentMethodId);            
+            order.AcceptChanges();
+            var respons = CreateResponseMessage(HttpStatusCode.OK,"Return Created");
+            return respons;
         }
 
 
