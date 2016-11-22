@@ -22,7 +22,7 @@ namespace EPiCode.Commerce.RestService.DataObjects
                 OrderLineItem orderLineItem = new OrderLineItem()
                 {
                     ParentCatalogEntryId = item.ParentCatalogEntryId,
-                    Code = item.CatalogEntryId,
+                    Code = item.Code,
                     Name = item.DisplayName
                 };
                 LineItems.Add(orderLineItem);

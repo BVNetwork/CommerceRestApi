@@ -12,7 +12,7 @@ namespace EPiCode.Commerce.RestService
         // GET api/<controller>
         public IEnumerable<DataObjects.Organization> Get()
         {
-            IEnumerable<Organization> organizations = CustomerContext.Current.GetAllOrganization();
+            IEnumerable<Organization> organizations = CustomerContext.Current.GetOrganizations();
 
             var organizationList = from Organization c in organizations select new DataObjects.Organization(c);
             

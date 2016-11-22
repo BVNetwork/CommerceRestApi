@@ -4,11 +4,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Rest Service for EPiServer Commerce")]
-[assembly: AssemblyDescription("A REST based API for EPiServer Commerce. See https://github.com/BVNetwork/CommerceRestApi for more information.")]
+[assembly: AssemblyTitle("Developer Rest Service for Episerver Commerce")]
+[assembly: AssemblyDescription("A REST based API for Epiaerver Commerce. See https://github.com/BVNetwork/CommerceRestApi for more information.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("EPiCode")]
-[assembly: AssemblyProduct("Rest Service for EPiServer Commerce")]
+[assembly: AssemblyProduct("Developer Rest Service for Episerver Commerce")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -27,5 +27,5 @@ using System.Runtime.InteropServices;
 //      Build Number
 //      Revision
 //
-[assembly: AssemblyVersion("1.1.13")]
-[assembly: AssemblyFileVersion("1.1.13")]
+[assembly: AssemblyVersion("2.0.0")]
+[assembly: AssemblyFileVersion("2.0.0")]

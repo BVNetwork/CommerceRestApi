@@ -26,7 +26,6 @@ namespace EPiCode.Commerce.RestService.DataObjects
             PreferredLanguage = customerContact.PreferredLanguage;
             PreferredCurrency = customerContact.PreferredCurrency;
             PrimaryKeyId = customerContact.PrimaryKeyId != null ? customerContact.PrimaryKeyId.ToString() : null;
-            ProviderUserKey = customerContact.ProviderUserKey;
             RegistrationSource = customerContact.RegistrationSource;
             UserId = customerContact.UserId;
             BirthDate = customerContact.BirthDate;

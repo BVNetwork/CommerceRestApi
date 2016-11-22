@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Reflection;
 using System.Web.Http;
 using EPiCode.Commerce.RestService.DataObjects;
-using log4net;
+using EPiServer.Logging;
 using Mediachase.Commerce.Catalog;
 using Mediachase.Commerce.Catalog.Dto;
 using Mediachase.Commerce.Catalog.Managers;
@@ -18,7 +17,7 @@ namespace EPiCode.Commerce.RestService
 {
     public class DataGeneratorController : SecuredApiController
     {
-        protected static ILog _log = log4net.LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+        protected static ILogger _log = LogManager.GetLogger();
 
         protected readonly string[] _registrationSources = new string[]
             {
@@ -32,7 +31,7 @@ namespace EPiCode.Commerce.RestService
         //public List<Address> CreateCustomers(int count)
         //{
         //    Stopwatch tmr = Stopwatch.StartNew();
-        //    _log.DebugFormat("Start Creating {0} customers", count);
+        //    _log.Debug("Start Creating {0} customers", count);
 
         //    CustomerController cc = new CustomerController();
         //    Generator generator = new Generator();
@@ -76,7 +75,7 @@ namespace EPiCode.Commerce.RestService
         //    }
 
         //    tmr.Stop();
-        //    _log.DebugFormat("Created {0} customers in {1}ms", count, tmr.ElapsedMilliseconds);
+        //    _log.Debug("Created {0} customers in {1}ms", count, tmr.ElapsedMilliseconds);
         //    return addresses;
         //}
 
@@ -84,7 +83,7 @@ namespace EPiCode.Commerce.RestService
         public string CreateOrders([FromBody] OrderGeneratorSettings settings)
         {
             Stopwatch tmr = Stopwatch.StartNew();
-            _log.DebugFormat("Start Creating {0} orders", settings.NumberOfOrdersToGenerate);
+            _log.Debug("Start Creating {0} orders", settings.NumberOfOrdersToGenerate);
 
             // We need all Products with variations
             ICatalogSystem catalog = EPiServer.ServiceLocation.ServiceLocator.Current.GetInstance<ICatalogSystem>();
@@ -92,16 +91,16 @@ namespace EPiCode.Commerce.RestService
             WalkCatalog(catalog, catalogEntryRows);
 
             long elapsedMilliseconds = tmr.ElapsedMilliseconds;
-            _log.DebugFormat("Reading {0} entries took {1}ms", catalogEntryRows.Count, elapsedMilliseconds);
+            _log.Debug("Reading {0} entries took {1}ms", catalogEntryRows.Count, elapsedMilliseconds);
 
             // Build the relationship between the products and their variations
             List<ProductInfo> productsAndVariations = BuildProductVariationRelations(catalogEntryRows, catalog);
-            _log.DebugFormat("There are {0} products (with variations)", productsAndVariations.Count);            
+            _log.Debug("There are {0} products (with variations)", productsAndVariations.Count);            
 
             // Load All customers, we need to distribute the orders among them
             CustomerController cc = new CustomerController();
             List<Customer> customers = cc.Get().ToList();
-            _log.DebugFormat("There are {0} customers to distribute {1} orders on", productsAndVariations.Count, customers.Count);
+            _log.Debug("There are {0} customers to distribute {1} orders on", productsAndVariations.Count, customers.Count);
             
             // Create them orders - this is where the bulk of the job is taking place
             string returnInfo = CreateOrdersForCustomers(settings, productsAndVariations, customers);
@@ -208,10 +207,10 @@ namespace EPiCode.Commerce.RestService
                                                                              new CatalogEntryResponseGroup(
                                                                                  CatalogEntryResponseGroup.ResponseGroup.CatalogEntryInfo));
 
-                _log.DebugFormat("Entries in Node: {0} (Count: {1})", node.Name, entries.CatalogEntry.Rows.Count);
+                _log.Debug("Entries in Node: {0} (Count: {1})", node.Name, entries.CatalogEntry.Rows.Count);
                 foreach (CatalogEntryDto.CatalogEntryRow entry in entries.CatalogEntry)
                 {
-                    // _log.DebugFormat("{3}: {0} ({1} - {2})", entry.Name, entry.Code, entry.CatalogEntryId, entry.ClassTypeId);
+                    // _log.Debug("{3}: {0} ({1} - {2})", entry.Name, entry.Code, entry.CatalogEntryId, entry.ClassTypeId);
                     if (catalogEntryRows.ContainsKey(entry.CatalogEntryId) == false)
                     {
                         catalogEntryRows.Add(entry.CatalogEntryId, entry);
@@ -260,7 +259,7 @@ namespace EPiCode.Commerce.RestService
 
                 OrderController oc = new OrderController();
                 int orderNumber = oc.CreateOrder(orderInfo);
-                _log.DebugFormat("Order for {0} on {1}: {2} products. Ordernumber: {3}",
+                _log.Debug("Order for {0} on {1}: {2} products. Ordernumber: {3}",
                                  customer.FullName, orderInfo.OrderDate, orderInfo.Products.Count, orderNumber);
 
             }

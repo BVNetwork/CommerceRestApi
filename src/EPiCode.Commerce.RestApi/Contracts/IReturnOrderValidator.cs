@@ -33,9 +33,9 @@ namespace EPiCode.Commerce.RestService.Contracts
 
             foreach (ReturnItem returnItem in returnInfo.ReturnItems)
             {
-                if (returnableLineItems.All(x => x.CatalogEntryId != returnItem.Sku))
+                if (returnableLineItems.All(x => x.Code != returnItem.Sku))
                 {
-                    errors.Add(string.Format("Lineitem with code: {0} is not returnable",returnItem.Sku));
+                    errors.Add(string.Format("Lineitem with code: {0} is not returnable", returnItem.Sku));
                 }
             }
 

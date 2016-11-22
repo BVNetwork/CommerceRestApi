@@ -4,17 +4,13 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web;
 using System.Web.Http;
 using EPiServer;
 using EPiServer.Core;
 using EPiServer.DataAbstraction.RuntimeModel;
+using EPiServer.Logging;
 using EPiServer.Security;
 using EPiServer.ServiceLocation;
-using log4net;
 using Mediachase.Commerce.Catalog;
 using Mediachase.Commerce.Catalog.Dto;
 using Mediachase.Commerce.Catalog.ImportExport;
@@ -27,7 +23,7 @@ namespace EPiCode.Commerce.RestService
     public class SystemController : SecuredApiController
     {
         // ReSharper disable once InconsistentNaming
-        protected static ILog _log = log4net.LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+        protected static ILogger _log = LogManager.GetLogger();
 
         public class ClearCatalogAndModelsResult
         {
@@ -100,7 +96,7 @@ namespace EPiCode.Commerce.RestService
         [HttpGet]
         public HttpResponseMessage SyncContentModels(bool forceCommit)
         {
-            _log.Info("Forcing a content type model scan and sync.");
+            _log.Information("Forcing a content type model scan and sync.");
             IContentTypeModelScanner modelScanner = ServiceLocator.Current.GetInstance<IContentTypeModelScanner>();
             modelScanner.Sync(forceCommit: forceCommit);
             HttpResponseMessage responseMessage = new HttpResponseMessage(HttpStatusCode.OK)
@@ -120,7 +116,7 @@ namespace EPiCode.Commerce.RestService
             {
                 if (doDelete && metaClass.IsSystem == false)
                 {
-                    _log.DebugFormat("Deleting class: {0} - {1} (System: {2})",
+                    _log.Debug("Deleting class: {0} - {1} (System: {2})",
                         metaClass.Name,
                         metaClass.Id,
                         metaClass.IsSystem);
@@ -140,7 +136,7 @@ namespace EPiCode.Commerce.RestService
                 else
                 {
                     result.MetaClassesSkipped++;
-                    _log.DebugFormat("NOT deleting system class: {0} - {1} (System: {2})",
+                    _log.Debug("NOT deleting system class: {0} - {1} (System: {2})",
                                 metaClass.Name,
                                 metaClass.Id,
                                 metaClass.IsSystem);
@@ -165,7 +161,7 @@ namespace EPiCode.Commerce.RestService
                     && filterFields.Contains(field.Name) == false
                     && field.Name.StartsWith("_") == false)
                 {
-                    _log.DebugFormat("Deleting field: {0} - {1} (System: {2})",
+                    _log.Debug("Deleting field: {0} - {1} (System: {2})",
                         field.Name,
                         field.Id,
                         field.IsSystem);
@@ -186,7 +182,7 @@ namespace EPiCode.Commerce.RestService
                 else
                 {
                     result.MetaFieldsSkipped++;
-                    _log.DebugFormat("NOT deleting field: {0} - {1} (System: {2})",
+                    _log.Debug("NOT deleting field: {0} - {1} (System: {2})",
                         field.Name,
                         field.Id,
                         field.IsSystem);

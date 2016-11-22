@@ -44,9 +44,7 @@ namespace EPiCode.Commerce.RestService
         /// <param name="customer"></param>
         public Customer Post([FromBody] Customer customer)
         {
-            // MembershipUser user = CreateMembershipUser(customer);
-            MembershipUser user = null;
-            CustomerContact newContact = CreateCustomerContact(customer, user);
+            CustomerContact newContact = CreateCustomerContact(customer);
             
             // Fetch contact from db
             Customer createdCustomer = Get((Guid)newContact.PrimaryKeyId);
@@ -82,28 +80,8 @@ namespace EPiCode.Commerce.RestService
 
         }
 
-        private MembershipUser CreateMembershipUser(Customer customer)
+        private CustomerContact CreateCustomerContact(Customer customer)
         {
-            MembershipUser user = Membership.CreateUser(customer.UserName, "Passw0rd!", customer.Email);
-            return user;
-        }
-
-        private CustomerContact CreateCustomerContact(Customer customer, MembershipUser user)
-        {
-            // Add user to everyone role
-            // Check if such role exists
-            if(user != null)
-            {
-                if (RoleExists(AppRoles.EveryoneRole))
-                {
-                    SecurityContext.Current.AssignUserToGlobalRole(user, AppRoles.EveryoneRole);
-                }
-
-                if (RoleExists(AppRoles.RegisteredRole))
-                {
-                    SecurityContext.Current.AssignUserToGlobalRole(user, AppRoles.RegisteredRole);
-                }
-            }
 
             // Now create an account in the ECF
             CustomerContact customerContact = CustomerContact.CreateInstance();
@@ -118,12 +96,6 @@ namespace EPiCode.Commerce.RestService
             return customerContact;
 
         }
-
-        private bool RoleExists(string roleName)
-        {
-            return SecurityContext.Current.GetAllRegisteredRoles().FirstOrDefault(x => x.RoleName == roleName) != null;
-        }
-
 
 
         // PUT api/<controller>/5

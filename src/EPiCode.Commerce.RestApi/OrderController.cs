@@ -90,9 +90,9 @@ namespace EPiCode.Commerce.RestService
 
             foreach (var item in returnInfo.ReturnItems)
             {
-                var returnableLineItems = ReturnExchangeManager.GetAvailableForReturnLineItems(order.OrderForms[0].Shipments[0]).Where(l => l.CatalogEntryId == item.Sku).ToList();
+                var returnableLineItems = ReturnExchangeManager.GetAvailableForReturnLineItems(order.OrderForms[0].Shipments[0]).Where(l => l.Code == item.Sku).ToList();
                 ReturnExchangeManager.AddNewReturnLineItemToReturnForm(returnForm, returnableLineItems.FirstOrDefault(), item.Quantity, item.ReturnReason);
-                ReturnExchangeManager.AddNewShipmetToReturnForm(returnForm, order.OrderForms[0].Shipments[0]);                
+                ReturnExchangeManager.AddNewShipmentToReturnForm(returnForm, order.OrderForms[0].Shipments[0]);                
             }
 
             ReturnFormStatusManager.AcknowledgeReceiptItems(returnForm);

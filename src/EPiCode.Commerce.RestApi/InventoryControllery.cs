@@ -1,25 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
-using EPiCode.Commerce.RestService.DataObjects;
 using EPiServer.ServiceLocation;
 using Mediachase.Commerce.Catalog;
-using Mediachase.Commerce.Catalog.Managers;
-using Mediachase.Commerce.Catalog.Objects;
 using Mediachase.Commerce.Core;
-using Mediachase.Commerce.Customers;
 using Mediachase.Commerce.Inventory;
-using Mediachase.Commerce.Orders;
-using Mediachase.Commerce.Orders.Managers;
-using Mediachase.Commerce.Pricing;
-using Mediachase.Commerce.Website.Helpers;
+using Mediachase.Commerce.InventoryService;
 using Newtonsoft.Json.Linq;
-using ServiceApi.DataObjects;
 
 namespace EPiCode.Commerce.RestService
 {
@@ -34,18 +20,23 @@ namespace EPiCode.Commerce.RestService
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public object Get(string id)
+        public object Get(string code)
         {
-            CatalogKey key = new CatalogKey(AppContext.Current.ApplicationId, id);
+            var inventoryService = ServiceLocator.Current.GetInstance<IInventoryService>();
+            //var warehouseRepository = ServiceLocator.Current.GetInstance<IWarehouseRepository>();
+            //var defaultWarehouse = warehouseRepository.GetDefaultWarehouse();
 
-            var warehouseInventoryService = ServiceLocator.Current.GetInstance<IWarehouseInventoryService>();
-
-            return warehouseInventoryService.List(key);
+            return inventoryService.QueryByEntry(new[] {code});
         }
 
         [HttpPost]
         public object Post(JObject inventory)
         {
+
+            var inventoryService = ServiceLocator.Current.GetInstance<IInventoryService>();
+            var warehouseRepository = ServiceLocator.Current.GetInstance<IWarehouseRepository>();
+            var defaultWarehouse = warehouseRepository.GetDefaultWarehouse();
+
 
             // Need the catalog code
             string code = inventory["CatalogEntryCode"].Value<string>();
@@ -59,7 +50,7 @@ namespace EPiCode.Commerce.RestService
             {
                 warehouseCode = inventory["WarehouseCode"].Value<string>();
             }
-            IWarehouseRepository warehouseRepository = ServiceLocator.Current.GetInstance<IWarehouseRepository>();
+
             var warehouse = warehouseRepository.Get(warehouseCode);
             if (warehouse == null)
                 throw new ArgumentNullException("warehouse");
@@ -70,24 +61,21 @@ namespace EPiCode.Commerce.RestService
                 throw new ArgumentNullException("InStockQuantity", "InStockQuantity is required");
             }
 
-            CatalogKey key = new CatalogKey(AppContext.Current.ApplicationId, code);
 
-            var inventoryService = ServiceLocator.Current.GetInstance<IWarehouseInventoryService>();
+            var existingInventory = inventoryService.Get(code, warehouse.Code);
 
-            var existingInventory = inventoryService.Get(key, warehouse);
-
-            WarehouseInventory inv;
+            InventoryRecord inv;
             if (existingInventory != null)
             {
-                inv = new WarehouseInventory(existingInventory);
+                inv = new InventoryRecord(existingInventory);
             }
             else
             {
-                inv = new WarehouseInventory();
+                inv = new InventoryRecord();
                 inv.WarehouseCode = warehouse.Code;
-                inv.CatalogKey = key;
+                inv.CatalogEntryCode = code;
             }
-            inv.InStockQuantity = inStockQuantity;
+            inv.PurchaseAvailableQuantity = inStockQuantity;
 
             // Set tracking status, if passed in, if not, ignore it
             string status = inventory["InventoryStatus"].Value<string>();
@@ -96,13 +84,13 @@ namespace EPiCode.Commerce.RestService
                 InventoryTrackingStatus inventoryTrackingStatus;
                 if(Enum.TryParse(status, true, out inventoryTrackingStatus))
                 {
-                    inv.InventoryStatus = inventoryTrackingStatus;
+                    inv.IsTracked = (inventoryTrackingStatus == InventoryTrackingStatus.Enabled);
                 }
             }
 
-            inventoryService.Save(inv);
+            inventoryService.Save(new[] {inv});
 
-            return Get(key.CatalogEntryCode);
+            return Get(code);
         }
 
 
