@@ -70,6 +70,19 @@ namespace EPiCode.Commerce.RestService
             return purchaseOrder;
         }
 
+        /// <summary>
+        /// Warning: Potentially very time consuming
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public IEnumerable<PurchaseOrder> GetCompletedOrders()
+        {
+            PurchaseOrder[] purchaseOrders =
+                OrderContext.Current.FindPurchaseOrdersByStatus(OrderStatus.Completed);
+            return purchaseOrders;
+        }
+
+
         [HttpPost]
         public HttpResponseMessage CreateReturn(ReturnInfo returnInfo)
         {
