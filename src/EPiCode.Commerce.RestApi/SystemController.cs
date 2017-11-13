@@ -85,7 +85,8 @@ namespace EPiCode.Commerce.RestService
         public string ImportCatalogXml(string filePath)
         {
             CatalogImportExport cie = new CatalogImportExport();
-            cie.Import(File.OpenRead(filePath), AppContext.Current.ApplicationId, string.Empty, true);
+            cie.Import(filePath, true);
+            // cie.Import(File.OpenRead(filePath), AppContext.Current.ApplicationId, string.Empty, true);
             return "Catalog Imported";
         }
 

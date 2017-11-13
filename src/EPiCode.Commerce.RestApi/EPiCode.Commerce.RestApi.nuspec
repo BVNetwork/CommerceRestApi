@@ -3,7 +3,7 @@
     <metadata>
         <id>EPiCode.Commerce.RestApi</id>
         <!-- Only for locally created packages -->
-        <version>2.2.0</version>
+        <version>2.3.0</version>
         <title>Rest API for Commerce</title>
         <authors>The EPiCode Community</authors>
         <projectUrl>https://github.com/BVNetwork/CommerceRestApi</projectUrl>
@@ -13,7 +13,7 @@
         <releaseNotes />
         <dependencies>
             <dependency id="Microsoft.AspNet.WebApi" version="5.2.3" />
-			<dependency id="EPiServer.Commerce.Core" version="[10.0.0, 11.0)"  />
+			<dependency id="EPiServer.Commerce.Core" version="[11.0.0, 12.0)"  />
         </dependencies>
     </metadata>
     <files>
